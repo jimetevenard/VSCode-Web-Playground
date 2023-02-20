@@ -1,0 +1,11 @@
+{
+  "name": "web-editor",
+  "version": "1.0.0",
+  "description": "VSCode web playground",
+  "scripts": {},
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "vscode-web": "^1.74.0"
+  }
+}
