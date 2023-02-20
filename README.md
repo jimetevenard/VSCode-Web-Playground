@@ -1,4 +1,6 @@
 
-# VSCode-Web Playground
+# VSCode Web Playground
 
-This extension drives the [VSCode web playground](https://vscode-web-test-playground.azurewebsites.net) with some test data. It is not meant for production use. 
+Source code for <https://vscode-playground.jimetevenard.com/>
+
+A VSCode playground with a custom [FileSystemProvider](https://code.visualstudio.com/api/references/vscode-api#FileSystemProvider) implemtation
