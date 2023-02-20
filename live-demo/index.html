@@ -28,7 +28,7 @@
 	<script src="./vscode-web/dist/out/vs/webPackagePaths.js"></script>
 	<script>
 		Object.keys(self.webPackagePaths).map(function (key, index) {
-			self.webPackagePaths[key] = `${window.location.origin}/vscode-web/dist/${key}/${self.webPackagePaths[key]}`;
+			self.webPackagePaths[key] = `${window.location.origin}/vscode-web/dist/node_modules/${key}/${self.webPackagePaths[key]}`;
 		});
 		require.config({
 			baseUrl: `${window.location.origin}/vscode-web/dist/out`,
