@@ -2,7 +2,7 @@ name: Deploy to Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: ["debug-ci"]
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -53,6 +53,10 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: live-demo
+      - name: debug
+        run: |
+             ls -al
+             ls -al live-demo
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
