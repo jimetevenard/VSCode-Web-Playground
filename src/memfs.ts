@@ -29,7 +29,7 @@ import {
 	Uri,
 	workspace,
 } from 'vscode';
-import { largeTSFile, getImageFile, debuggableFile, windows1251File, gbkFile } from './exampleFiles';
+import * as samples from './samples';
 
 export class File implements FileStat {
 
@@ -94,65 +94,18 @@ export class MemFS implements FileSystemProvider, FileSearchProvider, TextSearch
 	seed() {
 		this.createDirectory(Uri.parse(`memfs:/sample-folder/`));
 
-		// most common files types
-		this.writeFile(Uri.parse(`memfs:/sample-folder/large.ts`), textEncoder.encode(largeTSFile), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/file.txt`), textEncoder.encode('foo'), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/file.html`), textEncoder.encode('<html><body><h1 class="hd">Hello</h1></body></html>'), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/file.js`), textEncoder.encode('console.log("JavaScript")'), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/file.json`), textEncoder.encode('{ "json": true }'), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/file.ts`), textEncoder.encode('console.log("TypeScript")'), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/file.css`), textEncoder.encode('* { color: green; }'), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/file.md`), textEncoder.encode(debuggableFile), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/file.xml`), textEncoder.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>'), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/file.py`), textEncoder.encode('import base64, sys; base64.decode(open(sys.argv[1], "rb"), open(sys.argv[2], "wb"))'), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/file.yaml`), textEncoder.encode('- just: write something'), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/file.jpg`), getImageFile(), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/file.php`), textEncoder.encode('<?php echo "Hello World!"; ?>'), { create: true, overwrite: true });
+		this.writeFile(Uri.parse(`memfs:/sample-folder/deployment.yml`), textEncoder.encode(samples.deployment), { create: true, overwrite: true });
+		this.writeFile(Uri.parse(`memfs:/sample-folder/ingress.yml`), textEncoder.encode(samples.ingress), { create: true, overwrite: true });
+		this.writeFile(Uri.parse(`memfs:/sample-folder/service.yml`), textEncoder.encode(samples.service), { create: true, overwrite: true });
+		this.writeFile(Uri.parse(`memfs:/sample-folder/README.md`), textEncoder.encode(samples.readme), { create: true, overwrite: true });
 
-		// some more files & folders
-		this.createDirectory(Uri.parse(`memfs:/sample-folder/folder/`));
-		this.createDirectory(Uri.parse(`memfs:/sample-folder/workspaces/`));
-		this.createDirectory(Uri.parse(`memfs:/sample-folder/large/`));
-		this.createDirectory(Uri.parse(`memfs:/sample-folder/xyz/`));
-		this.createDirectory(Uri.parse(`memfs:/sample-folder/xyz/abc`));
-		this.createDirectory(Uri.parse(`memfs:/sample-folder/xyz/def`));
+		this.createDirectory(Uri.parse(`memfs:/sample-folder/docs/`));
+		
+		this.writeFile(Uri.parse(`memfs:/sample-folder/docs/index.html`), textEncoder.encode('<html><body><h1 class="hd">Hello</h1></body></html>'), { create: true, overwrite: true });
+		this.writeFile(Uri.parse(`memfs:/sample-folder/docs/foo.md`), textEncoder.encode('*MemFS*'), { create: true, overwrite: true });
+		this.writeFile(Uri.parse(`memfs:/sample-folder/docs/cat.jpg`), samples.getCatPictureFile(), { create: true, overwrite: true });
 
-		this.writeFile(Uri.parse(`memfs:/sample-folder/folder/empty.txt`), new Uint8Array(0), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/folder/empty.foo`), new Uint8Array(0), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/folder/file.ts`), textEncoder.encode('let a:number = true; console.log(a);'), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/large/rnd.foo`), randomData(50000), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/xyz/UPPER.txt`), textEncoder.encode('UPPER'), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/xyz/upper.txt`), textEncoder.encode('upper'), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/xyz/def/foo.md`), textEncoder.encode('*MemFS*'), { create: true, overwrite: true });
-		this.writeFile(Uri.parse(`memfs:/sample-folder/workspaces/mem.code-workspace`), textEncoder.encode(JSON.stringify({
-			"folders": [
-				{
-					"name": "sample-folder-large",
-					"uri": "memfs:/sample-folder/large"
-				},
-				{
-					"name": "sample-folder-xyz",
-					"uri": "memfs:/sample-folder/xyz"
-				},
-				{
-					"name": "sample-folder-folder",
-					"uri": "memfs:/sample-folder/folder"
-				}
-			]
-		}, undefined, '\t')), { create: true, overwrite: true });
 
-		// some files in different encodings
-		this.createDirectory(Uri.parse(`memfs:/sample-folder/encodings/`));
-		this.writeFile(
-			Uri.parse(`memfs:/sample-folder/encodings/windows1251.txt`),
-			windows1251File,
-			{ create: true, overwrite: true }
-		);
-		this.writeFile(
-			Uri.parse(`memfs:/sample-folder/encodings/gbk.txt`),
-			gbkFile,
-			{ create: true, overwrite: true }
-		);
 	}
 
 	root = new Directory(Uri.parse('memfs:/'), '');

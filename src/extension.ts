@@ -24,7 +24,9 @@ export function activate(context: vscode.ExtensionContext) {
 		enableProblems(context);
 		enableTasks();
 
-		vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(`memfs:/sample-folder/large.ts`));
+		vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(`memfs:/sample-folder/README.md`)).then(
+			() => vscode.commands.executeCommand('markdown.showPreview')
+		);
 	}
 }
 
