@@ -25,10 +25,14 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - name: install
-        run: yarn
       - name: build
-        run: yarn demo
+        run: |
+              cd live-demo
+              echo foo > foo.txt
+              mkdir bar
+              echo baz > bar/baz.txt
+              ls -l
+              ls -l baz
       - name: artifact
         uses: actions/upload-artifact@v2
         with:
