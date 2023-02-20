@@ -32,7 +32,7 @@ jobs:
               mkdir bar
               echo baz > bar/baz.txt
               ls -l
-              ls -l baz
+              ls -l bar
       - name: artifact
         uses: actions/upload-artifact@v2
         with:
